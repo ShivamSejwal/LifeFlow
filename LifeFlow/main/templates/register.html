@@ -3,32 +3,40 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Register - LifeFlow</title>
+  <title>Create an account · LifeFlow</title>
   {% load static %}
-  <link rel="stylesheet" href="{% static 'index.css' %}">
+  <link rel="stylesheet" href="{% static 'index.css' %}?v=4">
+  <link rel="stylesheet" href="{% static 'lifeflow.css' %}?v=2">
 </head>
-
-<body>
-  <div class="login-container">
-    <h1 class="title">LifeFlow</h1>
-    <p class="tagline">Simplify Your Life Admin, One Task at a Time</p>
-
-    <div class="register-box">
-      <h2>Create Account</h2>
-      <form method="POST" action="{% url 'register' %}">
-        {% csrf_token %}
-        <input type="text" name="username" placeholder="Username" required>
-        <input type="email" name="email" placeholder="Email" required>
-        <input type="password" name="password" placeholder="Password" required>
-        <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-        <button type="submit">Register</button>
-      </form>
-      {% if error %}
-        <p style="color:red;">{{ error }}</p>
-      {% endif %}
-      
-      <p class="register-text">Already have an account? <a href="{% url 'login' %}">Login</a></p>
-    </div>
-  </div>
+<body class="auth-page register-page">
+  <main class="auth-shell">
+    <section class="auth-intro" aria-label="About LifeFlow">
+      <a class="auth-brand" href="{% url 'LandingPage' %}" aria-label="LifeFlow home"><span class="brand-mark" aria-hidden="true">✳</span><span>LifeFlow</span></a>
+      <div class="intro-copy">
+        <p class="eyebrow">A little more room to breathe</p>
+        <h1>Make space for<br><em>what matters.</em></h1>
+        <p class="intro-description">Bring your plans, reminders, and everyday admin together in one calm place.</p>
+      </div>
+      <div class="intro-note"><span class="note-dot" aria-hidden="true"></span> Your day, in better balance.</div>
+    </section>
+    <section class="auth-panel" aria-labelledby="register-heading">
+      <div class="auth-card">
+        <p class="eyebrow">Your LifeFlow starts here</p>
+        <h2 id="register-heading">Create your account</h2>
+        <p class="auth-subtitle">It only takes a moment to get set up.</p>
+        {% if error %}<div class="auth-error" role="alert">{{ error }}</div>{% endif %}
+        <form method="POST" action="{% url 'register' %}" class="auth-form">
+          {% csrf_token %}
+          <div class="field-group"><label for="username">Username</label><input id="username" type="text" name="username" autocomplete="username" placeholder="Choose a username" value="{{ form_data.username|default:'' }}" required></div>
+          <div class="field-group"><label for="email">Email</label><input id="email" type="email" name="email" autocomplete="email" placeholder="you@example.com" value="{{ form_data.email|default:'' }}" required></div>
+          <div class="field-group"><label for="password">Password</label><input id="password" type="password" name="password" autocomplete="new-password" placeholder="Create a password" required></div>
+          <div class="field-group"><label for="confirm-password">Confirm password</label><input id="confirm-password" type="password" name="confirm_password" autocomplete="new-password" placeholder="Enter it once more" required></div>
+          <button class="auth-submit" type="submit">Create account <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="register-text">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+        <p class="auth-footnote">Your personal space to get life in flow.</p>
+      </div>
+    </section>
+  </main>
 </body>
 </html>

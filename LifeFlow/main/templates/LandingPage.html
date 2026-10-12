@@ -3,26 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LifeFlow - Welcome</title>
+    <meta name="theme-color" content="#101713">
+    <title>LifeFlow — Make space for what matters</title>
     {% load static %}
     <link rel="stylesheet" href="{% static 'index.css' %}">
+    <link rel="stylesheet" href="{% static 'lifeflow.css' %}">
 </head>
-
-<body>
-
-    <div class="intro-screen">
-        <div class="intro-text">LifeFlow</div>
-    </div>
-
-    <div class="landing-container">
-        <header class="landing-header">
-            <h1>Welcome to LifeFlow</h1>
-            <p>Organize your life with ease - tasks, bills, and subscriptions in one place.</p>
-            <div class="auth-links">
-                <a href="{% url 'login' %}">Log In</a> or <a href="{% url 'register' %}">Register</a>
+<body class="auth-page landing-page">
+    <main class="landing-shell">
+        <nav class="landing-nav" aria-label="Main navigation">
+            <a class="auth-brand" href="{% url 'LandingPage' %}">
+                <span class="brand-mark" aria-hidden="true">✳</span><span>LifeFlow</span>
+            </a>
+            <div class="landing-nav-links">
+                <a class="landing-login" href="{% url 'login' %}">Log in</a>
+                <a class="landing-nav-cta" href="{% url 'register' %}">Get started <span aria-hidden="true">→</span></a>
             </div>
-        </header>
-    </div>
+        </nav>
 
+        <section class="landing-hero" aria-labelledby="landing-title">
+            <div class="hero-copy">
+                <p class="eyebrow hero-eyebrow"><span class="note-dot" aria-hidden="true"></span> A calmer way to keep up</p>
+                <h1 id="landing-title">Make space for<br><em>what matters.</em></h1>
+                <p class="hero-description">Life comes with a lot of little things to remember. Keep tasks, bills, plans, and routines together, so your mind can be somewhere else.</p>
+                <div class="hero-actions">
+                    <a class="hero-primary" href="{% url 'register' %}">Find your flow <span aria-hidden="true">→</span></a>
+                    <a class="hero-secondary" href="{% url 'login' %}">I already have an account</a>
+                </div>
+                <p class="hero-aside">A little more organized. A little less on your mind.</p>
+            </div>
+
+            <div class="flow-art" aria-label="A preview of LifeFlow organizing your day">
+                <div class="orbit orbit-one"></div><div class="orbit orbit-two"></div>
+                <div class="flow-card flow-card-main">
+                    <div class="flow-card-heading"><span class="flow-icon">☀</span><div><strong>Your day</strong><small>A good place to start</small></div><span class="flow-more">•••</span></div>
+                    <div class="flow-task"><span class="task-check checked">✓</span><span class="task-copy done">Send the follow-up</span><span class="task-tag">Work</span></div>
+                    <div class="flow-task"><span class="task-check"></span><span class="task-copy">Pick up groceries</span><span class="task-tag tag-sand">Home</span></div>
+                    <div class="flow-task"><span class="task-check"></span><span class="task-copy">Take a proper break</span><span class="task-tag tag-blue">You</span></div>
+                    <div class="flow-card-footer"><span class="footer-spark">✳</span> One thing at a time is plenty.</div>
+                </div>
+                <div class="floating-note note-bill"><span class="note-icon">↗</span><span><strong>All caught up</strong><small>Bills & reminders</small></span></div>
+                <div class="floating-note note-balance"><span class="balance-sun">☀</span><span><strong>Room to breathe</strong><small>Your week, in balance</small></span></div>
+                <span class="art-spark spark-a">✳</span><span class="art-spark spark-b">✦</span>
+            </div>
+        </section>
+
+        <footer class="landing-footer"><span>Made for real life, at your pace.</span><span class="footer-rule"></span><span>Tasks · Bills · Plans · You</span></footer>
+    </main>
 </body>
 </html>

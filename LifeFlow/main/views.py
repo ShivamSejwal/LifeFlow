@@ -230,21 +230,38 @@ def login_view(request):
             login(request, user)
             next_url = request.POST.get('next') or request.GET.get('next')
             return redirect(next_url or 'appboard:home')
-    return render(request, 'index.html')
+        error = "Those sign-in details didn't match an account. Try again."
+    else:
+        error = ""
+    return render(request, 'index.html', {
+        'error': error,
+        'next': request.POST.get('next') or request.GET.get('next', ''),
+    })
 
 def register(request):
     if request.method == "POST":
-        username = request.POST.get("username") or ""
-        email = request.POST.get("email") or ""
+        username = (request.POST.get("username") or "").strip()
+        email = (request.POST.get("email") or "").strip()
         password = request.POST.get("password") or ""
         confirm_password = request.POST.get("confirm_password") or ""
+        form_data = {"username": username, "email": email}
 
-        if User.objects.filter(username=username).exists():
-            return render(request, "register.html", {"error": "Username already taken."})
-        if User.objects.filter(email=email).exists():
-            return render(request, "register.html", {"error": "Email already registered."})
+        if not username or not email or not password:
+            return render(request, "register.html", {
+                "error": "Please fill in every field.", "form_data": form_data,
+            })
+        if User.objects.filter(username__iexact=username).exists():
+            return render(request, "register.html", {
+                "error": "That username is already taken. Try another one.", "form_data": form_data,
+            })
+        if User.objects.filter(email__iexact=email).exists():
+            return render(request, "register.html", {
+                "error": "An account with that email already exists.", "form_data": form_data,
+            })
         if password != confirm_password:
-            return render(request, "register.html", {"error": "Passwords do not match."})
+            return render(request, "register.html", {
+                "error": "Those passwords don’t match. Please try again.", "form_data": form_data,
+            })
 
         User.objects.create_user(username=username, email=email, password=password)
         return redirect("login")
